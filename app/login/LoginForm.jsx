@@ -1,14 +1,35 @@
 "use client";
 import React, { useState } from "react";
 
-export default function LoginForm({title}) {
+export default function LoginForm({ title }) {
   const [email, setemail] = useState("");
   const [pswrd, setpassword] = useState("");
- 
-  const submitHandle = (e)=>{
-    e.preventDefault()
-    alert("You submitted the data..")
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const formValidation = (email, pswrd) =>{
+    if(!email){
+        setEmailError("Email is required.")
+    }else{
+        setEmailError("")
+    }
+        
+    if(!pswrd){
+        setPasswordError("Password is required.")
+    }else{
+        setPasswordError("")
+    }
+
+    if(email && pswrd){
+        alert("Submitted to Dash board.")
+    }
   }
+
+  const submitHandle = (e) => {
+    e.preventDefault()
+    formValidation(email, pswrd)
+    
+  };
 
   return (
     <div className="flex bg-white rounded-2xl shadow-2xl dark:border">
@@ -29,9 +50,13 @@ export default function LoginForm({title}) {
             id="email"
             value={email}
             onChange={(e) => {
-                setemail(e.target.value)
+              setemail(e.target.value);
             }}
             placeholder="name@company.com"></input>
+
+          {emailError && <label className="text-red-500 text-sm mt-1 text-end hover:text-green-500 font-serif">
+            {emailError}
+          </label>}
         </div>
 
         <div className="flex flex-col py-1">
@@ -44,9 +69,13 @@ export default function LoginForm({title}) {
             id="password"
             value={pswrd}
             onChange={(e) => {
-                setpassword(e.target.value)
+              setpassword(e.target.value);
             }}
             placeholder="• • • • • • • • • • •"></input>
+
+          {passwordError && <label className="text-red-500 text-sm mt-1 text-end  hover:text-green-500 font-serif">
+            {passwordError}
+          </label>}
         </div>
 
         <div className="flex flex-row py-2">
