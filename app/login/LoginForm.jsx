@@ -1,4 +1,5 @@
 "use client";
+import { APiHandle } from "../libs/apis/sever";
 import React, { useState } from "react";
 
 export default function LoginForm({ title }) {
@@ -7,28 +8,27 @@ export default function LoginForm({ title }) {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const formValidation = (email, pswrd) =>{
-    if(!email){
-        setEmailError("Email is required.")
-    }else{
-        setEmailError("")
-    }
-        
-    if(!pswrd){
-        setPasswordError("Password is required.")
-    }else{
-        setPasswordError("")
+  const formValidation = async (email, pswrd) => {
+    if (!email) {
+      setEmailError("Email is required.");
+    } else {
+      setEmailError("");
     }
 
-    if(email && pswrd){
-        alert("Submitted to Dash board.")
+    if (!pswrd) {
+      setPasswordError("Password is required.");
+    } else {
+      setPasswordError("");
     }
-  }
+
+    if (email && pswrd) {
+      APiHandle(email, pswrd);
+    }
+  };
 
   const submitHandle = (e) => {
-    e.preventDefault()
-    formValidation(email, pswrd)
-    
+    e.preventDefault();
+    formValidation(email, pswrd);
   };
 
   return (
@@ -54,9 +54,11 @@ export default function LoginForm({ title }) {
             }}
             placeholder="name@company.com"></input>
 
-          {emailError && <label className="text-red-500 text-sm mt-1 text-end hover:text-green-500 font-serif">
-            {emailError}
-          </label>}
+          {emailError && (
+            <label className="text-red-500 text-sm mt-1 text-end hover:text-green-500 font-serif">
+              {emailError}
+            </label>
+          )}
         </div>
 
         <div className="flex flex-col py-1">
@@ -73,9 +75,11 @@ export default function LoginForm({ title }) {
             }}
             placeholder="• • • • • • • • • • •"></input>
 
-          {passwordError && <label className="text-red-500 text-sm mt-1 text-end  hover:text-green-500 font-serif">
-            {passwordError}
-          </label>}
+          {passwordError && (
+            <label className="text-red-500 text-sm mt-1 text-end  hover:text-green-500 font-serif">
+              {passwordError}
+            </label>
+          )}
         </div>
 
         <div className="flex flex-row py-2">
